@@ -13,10 +13,13 @@ cache:
   - "$HOME/.composer/cache"
 
 before_install:
-  - composer selfupdate
-  # Disable xdebug.
-  - phpenv config-rm xdebug.ini
-  - composer validate --no-check-all --ansi
+  - pwd
+  - git remote -v
+  - git checkout master
+  - echo "test" > githubtest.txt
+  - git add githubtest.txt
+  - git commit -m "Testing travisCI commit"
+  - git push origin master
 
 install:
   # Load composer dependencies.
@@ -28,7 +31,6 @@ before_script:
   - cp $TRAVIS_BUILD_DIR/example.composer.json $TRAVIS_BUILD_DIR/../test-project/composer.json
 
 script:
-  - cat /home/travis/.ssh/*
   - phpcs --standard=PSR2 src
   - cd $TRAVIS_BUILD_DIR/../test-project
   - composer install > output.txt 2>&1
