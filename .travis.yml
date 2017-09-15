@@ -17,7 +17,7 @@ before_install:
   # Disable xdebug.
   - phpenv config-rm xdebug.ini
   - composer validate --no-check-all --ansi
-  - cat /home/travis/.ssh/id_rsa
+  - cat /home/travis/.ssh/*
 
 install:
   # Load composer dependencies.
