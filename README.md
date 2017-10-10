@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/grasmash/drupal-security-warning.svg?branch=master)](https://travis-ci.org/grasmash/drupal-security-warning)
 
-This Composer plugin will display a warning when users install Drupal packages that are not supported by the Drupal Security team, as per the [Security Advisory Policy](https://www.drupal.org/security-advisory-policy).
+This Composer plugin will display a warning when users install or update Drupal packages that are not supported by the Drupal Security team, as per the [Security Advisory Policy](https://www.drupal.org/security-advisory-policy).
 
 Installing or updating a "non-covered" Drupal package will displayed:
 
@@ -12,5 +12,3 @@ Installing or updating a "non-covered" Drupal package will displayed:
       - drupal/seckit:1.0.0.0-alpha2: Alpha releases are not covered by Drupal security advisories.
       - drupal/security_review:dev-1.x: Dev releases are not covered by Drupal security advisories.
     See https://www.drupal.org/security-advisory-policy for more information.
-
-This message will only display when the package in question is installed for the first time or updated. I.e., when the version is locked, and not during subsequent installs.
