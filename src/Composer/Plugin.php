@@ -85,7 +85,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $extra = $package->getExtra();
         if (!empty($extra['drupal']['security-coverage']['status'])
           && $extra['drupal']['security-coverage']['status'] == 'not-covered') {
-          return false;
+            return false;
         }
         return true;
     }
@@ -103,7 +103,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             );
             foreach ($this->unsupportedPackages as $package_name => $package) {
                 $extra = $package->getExtra();
-                $this->io->write("  - <comment>$package_name:{$package->getVersion()}</comment>: {$extra['drupal']['security-coverage']['message']}");
+                $this->io->write(
+                    "  - <comment>$package_name:{$package->getVersion()}</comment>: {$extra['drupal']['security-coverage']['message']}"
+                );
             }
             $this->io->write(
                 '<comment>See https://www.drupal.org/security-advisory-policy for more information.</comment>'

@@ -24,5 +24,5 @@ install:
   - export PATH=$TRAVIS_BUILD_DIR/vendor/bin:$PATH
 
 script:
-  - phpcs --standard=PSR2 src
+  - phpcs --standard=PSR2 src --exclude=Generic.Files.LineLength
   - ./vendor/bin/phpunit
