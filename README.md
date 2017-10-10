@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/grasmash/drupal-security-warning.svg?branch=master)](https://travis-ci.org/grasmash/drupal-security-warning)
+[![Build Status](https://travis-ci.org/grasmash/drupal-security-warning.svg?branch=master)](https://travis-ci.org/grasmash/drupal-security-warning) [![Latest Stable Version](https://poser.pugx.org/grasmash/drupal-security-warning/v/stable)](https://packagist.org/packages/grasmash/drupal-security-warning) [![Total Downloads](https://poser.pugx.org/grasmash/drupal-security-warning/downloads)](https://packagist.org/packages/grasmash/drupal-security-warning) [![License](https://poser.pugx.org/grasmash/drupal-security-warning/license)](https://packagist.org/packages/grasmash/drupal-security-warning)
 
 This Composer plugin will display a warning when users install or update Drupal packages that are not supported by the Drupal Security team, as per the [Security Advisory Policy](https://www.drupal.org/security-advisory-policy).
 
