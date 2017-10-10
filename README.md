@@ -2,7 +2,7 @@
 
 This Composer plugin will display a warning when users install or update Drupal packages that are not supported by the Drupal Security team, as per the [Security Advisory Policy](https://www.drupal.org/security-advisory-policy).
 
-Installing or updating a "non-covered" Drupal package will displayed:
+Installing or updating a "non-covered" Drupal package will display:
 
     You are using Drupal packages that are not supported by the Drupal Security Team!
       - drupal/consumers:1.0.0.0-beta1: Project has not opted into security advisory coverage!
