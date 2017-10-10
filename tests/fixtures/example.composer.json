@@ -14,7 +14,8 @@
   },
   "require": {
     "grasmash/drupal-security-warning": "*@dev",
-    "drupal/ctools": "3.0.0.0-alpha27"
+    "drupal/ctools": "3.0.0.0-alpha27",
+    "drupal/token": "1.0.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

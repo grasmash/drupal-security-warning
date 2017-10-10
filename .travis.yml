@@ -23,12 +23,6 @@ install:
   - composer install
   - export PATH=$TRAVIS_BUILD_DIR/vendor/bin:$PATH
 
-before_script:
-  - mkdir $TRAVIS_BUILD_DIR/../test-project
-  - cp $TRAVIS_BUILD_DIR/example.composer.json $TRAVIS_BUILD_DIR/../test-project/composer.json
-
 script:
-  - phpcs --standard=PSR2 src
-  - cd $TRAVIS_BUILD_DIR/../test-project
-  - composer install > output.txt 2>&1
-  - grep "You are using Drupal packages that are not supported by the Drupal Security Team!" output.txt
+  - phpcs --standard=PSR2 src --exclude=Generic.Files.LineLength
+  - ./vendor/bin/phpunit
