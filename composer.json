@@ -18,7 +18,10 @@
   },
   "require-dev": {
     "composer/composer": "~1.0",
-    "squizlabs/php_codesniffer": "^2.7"
+    "squizlabs/php_codesniffer": "^2.7",
+    "phpunit/phpunit": "^6.4",
+    "symfony/filesystem": "^3.3",
+    "symfony/process": "^3.3"
   },
   "autoload": {
     "psr-4": {
@@ -26,6 +29,9 @@
     }
   },
   "extra": {
-    "class": "grasmash\\DrupalSecurityWarning\\Composer\\Plugin"
+    "class": "grasmash\\DrupalSecurityWarning\\Composer\\Plugin",
+    "branch-alias": {
+      "dev-master": "1.x-dev"
+    }
   }
 }

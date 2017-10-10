@@ -2,28 +2,20 @@
 
 /**
  * @file
- * Provides a way to patch Composer packages after installation.
+ * Generates a warning for installation of Drupal packages not supported by Security Team.
  */
 
 namespace grasmash\DrupalSecurityWarning\Composer;
 
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\InstallOperation;
-use Composer\DependencyResolver\Operation\UninstallOperation;
 use Composer\DependencyResolver\Operation\UpdateOperation;
-use Composer\DependencyResolver\Operation\OperationInterface;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
-use Composer\Package\AliasPackage;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Installer\PackageEvents;
-use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use Composer\Script\PackageEvent;
-use Composer\Util\ProcessExecutor;
-use Composer\Util\Filesystem;
-use Symfony\Component\Process\Process;
 
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
@@ -85,13 +77,15 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Checks to see if this Drupal package is supported by the Drupal Security Team.
      *
-     * @param $package
+     * @param \Composer\Package\PackageInterface $package
      * @return bool
      */
     protected function isPackageSupported($package)
     {
-        if (preg_match('/((alpha|beta|rc)\d)|\-dev|dev\-/', $package->getVersion())) {
-            return false;
+        $extra = $package->getExtra();
+        if (!empty($extra['drupal']['security-coverage']['status'])
+          && $extra['drupal']['security-coverage']['status'] == 'not-covered') {
+          return false;
         }
         return true;
     }
@@ -108,7 +102,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 '<error>You are using Drupal packages that are not supported by the Drupal Security Team!</error>'
             );
             foreach ($this->unsupportedPackages as $package_name => $package) {
-                $this->io->write("  - <comment>$package_name:{$package->getVersion()}</comment>");
+                $extra = $package->getExtra();
+                $this->io->write("  - <comment>$package_name:{$package->getVersion()}</comment>: {$extra['drupal']['security-coverage']['message']}");
             }
             $this->io->write(
                 '<comment>See https://www.drupal.org/security-advisory-policy for more information.</comment>'
