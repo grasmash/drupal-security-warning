@@ -49,13 +49,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     /**
      * Returns an array of event names this subscriber wants to listen to.
+     *
+     * @see https://getcomposer.org/doc/articles/scripts.md#event-names
      */
     public static function getSubscribedEvents()
     {
         return array(
             PackageEvents::POST_PACKAGE_INSTALL => "onPostPackageEvent",
             PackageEvents::POST_PACKAGE_UPDATE => "onPostPackageEvent",
-            ScriptEvents::POST_UPDATE_CMD => 'onPostCmdEvent'
+            ScriptEvents::POST_INSTALL_CMD => 'onPostCmdEvent',
+            ScriptEvents::POST_UPDATE_CMD => 'onPostCmdEvent',
         );
     }
 
