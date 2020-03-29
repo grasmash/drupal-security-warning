@@ -19,8 +19,8 @@
     "composer/composer": "^1 || ^2@dev",
     "squizlabs/php_codesniffer": "^3",
     "phpunit/phpunit": "^5.7.0",
-    "symfony/filesystem": "^3",
-    "symfony/process": "^3"
+    "symfony/filesystem": "^3.4.38",
+    "symfony/process": "^3.4.38"
   },
   "autoload": {
     "psr-4": {

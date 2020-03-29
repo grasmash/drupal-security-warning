@@ -9,12 +9,6 @@ matrix:
     - php: 7.3
       env: 'HIGHEST_LOWEST="update --prefer-lowest"'
 
-cache:
-  bundler: true
-  apt: true
-  directories:
-  - "$HOME/.composer/cache"
-
 before_install:
   - composer selfupdate
   # Disable xdebug.
