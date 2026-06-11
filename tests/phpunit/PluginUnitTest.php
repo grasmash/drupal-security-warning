@@ -4,10 +4,14 @@ namespace grasmash\DrupalSecurityWarning\Tests;
 
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\InstallOperation;
+use Composer\DependencyResolver\Operation\OperationInterface;
 use Composer\DependencyResolver\Operation\UninstallOperation;
 use Composer\DependencyResolver\Operation\UpdateOperation;
+use Composer\Installer\PackageEvent;
+use Composer\Installer\PackageEvents;
 use Composer\IO\BufferIO;
 use Composer\Package\Package;
+use Composer\Repository\InstalledArrayRepository;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 use grasmash\DrupalSecurityWarning\Composer\Plugin;
@@ -222,8 +226,70 @@ class PluginUnitTest extends TestCase
         $this->assertSame('', $this->io->getOutput());
     }
 
+    public function testSubscribesToPackageAndCommandEvents(): void
+    {
+        $events = Plugin::getSubscribedEvents();
+
+        $this->assertSame('onPostPackageEvent', $events[PackageEvents::POST_PACKAGE_INSTALL]);
+        $this->assertSame('onPostPackageEvent', $events[PackageEvents::POST_PACKAGE_UPDATE]);
+        $this->assertSame('onPostCmdEvent', $events[ScriptEvents::POST_INSTALL_CMD]);
+        $this->assertSame('onPostCmdEvent', $events[ScriptEvents::POST_UPDATE_CMD]);
+    }
+
+    public function testPostPackageEventCollectsUnsupportedPackage(): void
+    {
+        $package = $this->createPackage('drupal/ctools', '3.0.0-alpha27', [
+            'drupal' => ['security-coverage' => ['status' => 'not-covered']],
+        ]);
+        $this->plugin->onPostPackageEvent($this->createPackageEvent(new InstallOperation($package)));
+
+        $this->assertSame(
+            ['drupal/ctools' => $package],
+            $this->plugin->getUnsupportedPackages()
+        );
+    }
+
+    public function testPostPackageEventIgnoresSupportedPackage(): void
+    {
+        $package = $this->createPackage('drupal/token', '1.0.0', [
+            'drupal' => ['security-coverage' => ['status' => 'covered']],
+        ]);
+        $this->plugin->onPostPackageEvent($this->createPackageEvent(new InstallOperation($package)));
+
+        $this->assertSame([], $this->plugin->getUnsupportedPackages());
+    }
+
+    public function testPostPackageEventIgnoresNonDrupalPackage(): void
+    {
+        $package = $this->createPackage('symfony/console');
+        $this->plugin->onPostPackageEvent($this->createPackageEvent(new InstallOperation($package)));
+
+        $this->assertSame([], $this->plugin->getUnsupportedPackages());
+    }
+
+    public function testDeactivateAndUninstallAreNoOps(): void
+    {
+        $this->plugin->deactivate(new Composer(), $this->io);
+        $this->plugin->uninstall(new Composer(), $this->io);
+
+        $this->assertSame('', $this->io->getOutput());
+    }
+
     protected function createScriptEvent(): Event
     {
         return new Event(ScriptEvents::POST_INSTALL_CMD, new Composer(), $this->io, false);
+    }
+
+    protected function createPackageEvent(OperationInterface $operation): PackageEvent
+    {
+        return new PackageEvent(
+            PackageEvents::POST_PACKAGE_INSTALL,
+            new Composer(),
+            $this->io,
+            false,
+            new InstalledArrayRepository(),
+            [$operation],
+            $operation
+        );
     }
 }
