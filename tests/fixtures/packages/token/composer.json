@@ -1,0 +1,11 @@
+{
+  "name": "drupal/token",
+  "description": "Test fixture: package covered by security advisories.",
+  "extra": {
+    "drupal": {
+      "security-coverage": {
+        "status": "covered"
+      }
+    }
+  }
+}

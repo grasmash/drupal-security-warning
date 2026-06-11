@@ -1,0 +1,12 @@
+{
+  "name": "drupal/ctools",
+  "description": "Test fixture: package not covered by security advisories.",
+  "extra": {
+    "drupal": {
+      "security-coverage": {
+        "status": "not-covered",
+        "message": "Alpha releases are not covered by Drupal security advisories."
+      }
+    }
+  }
+}
