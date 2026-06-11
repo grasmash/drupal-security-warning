@@ -2,20 +2,40 @@
   "repositories": {
     "local": {
       "type": "path",
-      "url": "../drupal-security-warning",
+      "url": "%PROJECT_ROOT%",
       "options": {
         "symlink": true
       }
     },
-    "drupal": {
-      "type": "composer",
-      "url": "https://packages.drupal.org/8"
-    }
+    "ctools": {
+      "type": "path",
+      "url": "%PROJECT_ROOT%/tests/fixtures/packages/ctools",
+      "options": {
+        "versions": {
+          "drupal/ctools": "3.0.0-alpha27"
+        }
+      }
+    },
+    "token": {
+      "type": "path",
+      "url": "%PROJECT_ROOT%/tests/fixtures/packages/token",
+      "options": {
+        "versions": {
+          "drupal/token": "1.0.0"
+        }
+      }
+    },
+    "packagist.org": false
   },
   "require": {
     "grasmash/drupal-security-warning": "*@dev",
-    "drupal/ctools": "3.0.0.0-alpha27",
+    "drupal/ctools": "3.0.0-alpha27",
     "drupal/token": "1.0.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "grasmash/drupal-security-warning": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true

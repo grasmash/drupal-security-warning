@@ -1,8 +1,25 @@
-## Manual testing
+# Contributing
 
-        rm -rf tests/tmp/vendor tests/tmp/composer.lock
-        COMPOSER_ALLOW_XDEBUG=1 ./vendor/bin/composer install --working-dir tests/tmp -v
+## Setup
+
+    composer install
 
 ## Automated testing
 
-        ./vendor/bin/phpunit
+Runs lint, PHPUnit (unit + integration), and PHPCS:
+
+    composer test
+
+Individual suites:
+
+    composer lint
+    composer unit
+    composer cs
+
+Fix coding standards violations automatically:
+
+    composer cbf
+
+The integration test (`tests/phpunit/SecurityWarningTest.php`) runs a real
+`composer install` against local fixture packages in `tests/fixtures/packages/`
+inside a temporary directory. It requires no network access.
